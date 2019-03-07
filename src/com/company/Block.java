@@ -34,11 +34,15 @@ public class Block {
         return true;
     }
 
+    public void setTransaction(Transaction transaction) {
+        this.transaction = transaction;
+    }
+
     public Transaction getTransaction() {
         return transaction;
     }
 
-    private String getValidHash() { // proof of work
+    public String getValidHash() { // proof of work
         String tempHash = calculateHash();
         while (!isHashValid(tempHash)) {
             nonce++;

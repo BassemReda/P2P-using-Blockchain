@@ -15,6 +15,11 @@ public class Blockchain {
         blockchain.add(new Block(transaction, prev_hash));
     }
     public Transaction getBlockData(int index){
-        return blockchain.get(index).getTransaction();
+        Block required = blockchain.get(index);
+        String hash = required.calculateHash();
+        if ( index < blockchain.size()-1 && hash.equals(blockchain.get(index+1).getPrev_hash()) )
+            return blockchain.get(index).getTransaction();
+        else
+            return new Transaction("","","");
     }
 }
