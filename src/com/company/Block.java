@@ -14,7 +14,7 @@ public class Block {
         timestamp = new Date().getTime();
         this.transaction = transaction;
         this.prev_hash = prev_hash;
-        this.hash = calculateHash();
+        this.hash = getValidHash();
         nonce = 0;
     }
 
@@ -32,6 +32,10 @@ public class Block {
                 return false;
         }
         return true;
+    }
+
+    public Transaction getTransaction() {
+        return transaction;
     }
 
     private String getValidHash() { // proof of work

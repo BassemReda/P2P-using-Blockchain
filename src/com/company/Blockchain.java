@@ -14,4 +14,7 @@ public class Blockchain {
             prev_hash = blockchain.get(blockchain.size() - 1).getHash();
         blockchain.add(new Block(transaction, prev_hash));
     }
+    public Transaction getBlockData(int index){
+        return blockchain.get(index).getTransaction();
+    }
 }

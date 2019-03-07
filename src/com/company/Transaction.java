@@ -5,6 +5,12 @@ public class Transaction {
     private String destination;
     private String data;
 
+    public Transaction(String source, String destination, String data) {
+        this.source = source;
+        this.destination = destination;
+        this.data = data;
+    }
+
     public String getSource() { return source; }
 
     public String getDestination() { return destination; }
