@@ -2,23 +2,20 @@ package com.company;
 
 import de.tum.in.www1.jReto.LocalPeer;
 import de.tum.in.www1.jReto.RemotePeer;
+import de.tum.in.www1.jReto.module.wlan.WlanModule;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.Executor;
 
 public class LocalTransPeer {
 
     private LocalPeer localPeer;
-    /*
-     * Stores a map from the reto class for remote peers to RemoteChatPeers. Replace Object with the corresponding class.
-     * */
     private Map<RemotePeer, P2PConnection> chatPeers = new HashMap<>();
-
     private String displayName;
-//    private SimpleChatUI chatUI;
 
-    public LocalTransPeer(SimpleChatUI chatUI, Executor mainThreadExecutor) {
-        this.chatUI = chatUI;
+    public LocalTransPeer(Executor mainThreadExecutor) {
 
         try {
             this.initializeLocalPeer(mainThreadExecutor);
@@ -36,30 +33,25 @@ public class LocalTransPeer {
         this.localPeer = new LocalPeer(Arrays.asList(wlanModule), executor);
     }
 
-    /**
-     * Starts the local peer.
-     * When a peer is discovered, a ChatRoom with that peer is created, when one is lost, the corresponding ChatRoom is removed.
-     */
     public void start(String displayName) {
         this.displayName = displayName;
 
         this.localPeer.start(
-                peer -> createChatPeer(peer),
-                peer -> removeChatPeer(peer)
+                peer -> createConnection(peer),
+                peer -> removeConnection(peer)
         );
     }
 
-    public void createChatPeer(RemotePeer peer) {
+    public void createConnection(RemotePeer peer) {
         if (this.chatPeers.get(peer) != null) {
             System.err.println("We already have a chat peer for this peer!");
             return;
         }
 
-        ChatRoom chatPeer = new ChatRoom(peer, this.displayName, this.chatUI);
+        P2PConnection chatPeer = new P2PConnection(peer, this.displayName);
         this.chatPeers.put(peer, chatPeer);
     }
-    public void removeChatPeer(RemotePeer peer) {
-        this.chatUI.removeChatPeer(this.chatPeers.get(peer));
+    public void removeConnection(RemotePeer peer) {
         this.chatPeers.remove(peer);
     }
 
