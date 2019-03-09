@@ -8,5 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="jReto-1.0-with-deps" level="project" />
+    <orderEntry type="library" name="org.hive2hive.client-1.2.2" level="project" />
   </component>
 </module>
